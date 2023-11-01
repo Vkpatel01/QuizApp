@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li id="Home"><a href="#">Home</a></li>
+                <li id="About"><a href="#">About</a></li>
+                <li id="Contact"><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="quiz-container">
+        <h1>Quiz Game</h1>
+        <div id="question-container"></div>
+        <div id="options-container"></div>
+        <button onclick="nextQuestion()">Next</button>
+        <button onclick="resetQuiz()">Reset</button>
+        <div id="result-container"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Quiz Game. All rights reserved. | Contact: vks9547@gmail.com</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
