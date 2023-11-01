@@ -106,13 +106,15 @@ const quizData = [
             }
         
 
-];let currentQuestionIndex = 0;
-let score = 0;
+];
 
+let currentQuestionIndex = 0;
+let score = 0;
 
 function showQuestion(question) {
     document.getElementById('question-container').textContent = question;
 }
+
 
 function showOptions(options) {
     const optionsContainer = document.getElementById('options-container');
@@ -120,24 +122,43 @@ function showOptions(options) {
     options.forEach(option => {
         const button = document.createElement('button');
         button.textContent = option;
-        button.addEventListener('click', checkAnswer);
+        button.addEventListener('click', function() {
+            checkAnswer(option, button);
+        });
         optionsContainer.appendChild(button);
     });
 }
 
-function checkAnswer(event) {
-    const selectedOption = event.target.textContent;
+function checkAnswer(selectedOption, button) {
     const correctAnswer = quizData[currentQuestionIndex].correctAnswer;
 
     if (selectedOption === correctAnswer) {
         score++;
+
+        button.style.backgroundColor = '#4CAF50';
+    } else {
+        button.style.backgroundColor = '#BC544B';
     }
 
-    showNextQuestion();
+ 
+    const allOptions = document.querySelectorAll('#options-container button');
+    allOptions.forEach(optionButton => {
+        optionButton.disabled = true;
+    });
+
+  
+    setTimeout(showNextQuestion, 900);
 }
 
 
 function showNextQuestion() {
+    
+    const allOptions = document.querySelectorAll('#options-container button');
+    allOptions.forEach(optionButton => {
+        optionButton.style.backgroundColor = '';
+        optionButton.disabled = false;
+    });
+
     currentQuestionIndex++;
     if (currentQuestionIndex < quizData.length) {
         showQuestion(quizData[currentQuestionIndex].question);
@@ -147,8 +168,22 @@ function showNextQuestion() {
     }
 }
 
+function showPreviousQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion(quizData[currentQuestionIndex].question);
+        showOptions(quizData[currentQuestionIndex].options);
+    }
+}
 
 function resetQuiz() {
+  
+    const allOptions = document.querySelectorAll('#options-container button');
+    allOptions.forEach(optionButton => {
+        optionButton.style.backgroundColor = '';
+        optionButton.disabled = false;
+    });
+
     currentQuestionIndex = 0;
     score = 0;
     showQuestion(quizData[currentQuestionIndex].question);
@@ -161,7 +196,5 @@ function showResult() {
     const resultContainer = document.getElementById('result-container');
     resultContainer.innerHTML = `<h2>Your Score: ${score}/${quizData.length}</h2>`;
 }
-
-
 showQuestion(quizData[currentQuestionIndex].question);
 showOptions(quizData[currentQuestionIndex].options);
